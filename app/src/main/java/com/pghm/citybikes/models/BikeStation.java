@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.pghm.citybikes.R;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -86,21 +85,7 @@ public class BikeStation {
 
     private static int parseBikesAvailable(JSONObject obj) {
         try {
-            JSONArray bikesAvailableByTypeArray = obj
-                    .getJSONObject("availableVehicles")
-                    .getJSONArray("byType");
-
-            for (int i = 0; i < bikesAvailableByTypeArray.length(); i++) {
-                JSONObject bikesAvailableObject = bikesAvailableByTypeArray.getJSONObject(i);
-                String type = bikesAvailableObject
-                        .getJSONObject("vehicleType")
-                        .getString("formFactor");
-                if (type.equals("BICYCLE")) {
-                    return bikesAvailableObject.getInt("count");
-                }
-            }
-
-            return 0;
+            return obj.getJSONObject("availableVehicles").getInt("total");
         } catch (JSONException e) {
             return 0;
         }
@@ -108,21 +93,7 @@ public class BikeStation {
 
     private static int parseSpacesAvailable(JSONObject obj) {
         try {
-            JSONArray spacesAvailableByTypeArray = obj
-                    .getJSONObject("availableSpaces")
-                    .getJSONArray("byType");
-
-            for (int i = 0; i < spacesAvailableByTypeArray.length(); i++) {
-                JSONObject spacesAvailableObject = spacesAvailableByTypeArray.getJSONObject(i);
-                String type = spacesAvailableObject
-                        .getJSONObject("vehicleType")
-                        .getString("formFactor");
-                if (type.equals("BICYCLE")) {
-                    return spacesAvailableObject.getInt("count");
-                }
-            }
-
-            return 0;
+            return obj.getJSONObject("availableSpaces").getInt("total");
         } catch (JSONException e) {
             return 0;
         }

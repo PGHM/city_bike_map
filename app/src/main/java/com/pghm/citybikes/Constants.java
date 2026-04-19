@@ -25,20 +25,10 @@ public class Constants {
                 lat
                 lon
                 availableSpaces {
-                    byType {
-                        count
-                        vehicleType {
-                            formFactor
-                        }
-                    }
+                    total
                 }
                 availableVehicles {
-                    byType {
-                        count
-                        vehicleType {
-                            formFactor
-                        }
-                    }
+                    total
                 }
             }
         }"
