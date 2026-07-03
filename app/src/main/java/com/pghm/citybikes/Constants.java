@@ -24,12 +24,10 @@ public class Constants {
                 name
                 lat
                 lon
-                availableSpaces {
-                    total
-                }
                 availableVehicles {
                     total
                 }
+                capacity
             }
         }"
     }

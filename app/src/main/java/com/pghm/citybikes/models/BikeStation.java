@@ -13,8 +13,8 @@ public class BikeStation {
     private final String name;
     private final double lat;
     private final double lon;
+    private final int capacity;
     private int bikesAvailable;
-    private int spacesAvailable;
 
     public BikeStation(
             String id,
@@ -22,14 +22,14 @@ public class BikeStation {
             double lat,
             double lon,
             int bikesAvailable,
-            int spacesAvailable
+            int capacity
     ) {
         this.id = id;
         this.name = name;
         this.lat = lat;
         this.lon = lon;
         this.bikesAvailable = bikesAvailable;
-        this.spacesAvailable = spacesAvailable;
+        this.capacity = capacity;
     }
 
     public String getId() {
@@ -53,47 +53,36 @@ public class BikeStation {
     }
 
     public String getFreeBikesText(Context context) {
-        return String.format(context.getString(R.string.free_bikes), bikesAvailable, this.getTotalSpace());
+        return String.format(context.getString(R.string.free_bikes), bikesAvailable, capacity);
     }
 
-    private int getTotalSpace() {
-        return bikesAvailable + spacesAvailable;
-    }
-
-    /* Assume that bike station id, name or location do not change during the lifetime of the app.
-     * Also assume that station did not suddenly have invalid data on bike or space availablity */
+    /*
+     * Assume that bike station id, name, capacity or location do not change during the lifetime
+     * of the app. Also assume that station did not suddenly have invalid data on bike availability
+     */
     public void updateFromJson(JSONObject obj) throws JSONException {
         bikesAvailable = parseBikesAvailable(obj);
-        spacesAvailable = parseSpacesAvailable(obj);
     }
 
     public static BikeStation fromJson(JSONObject obj) throws JSONException {
-        int spacesAvailable = parseSpacesAvailable(obj);
-        if (spacesAvailable > 0) {
+        int capacity = obj.getInt("capacity");
+        if (capacity > 0) {
             return new BikeStation(
                     obj.getString("id"),
                     obj.getString("name"),
                     obj.getDouble("lat"),
                     obj.getDouble("lon"),
                     parseBikesAvailable(obj),
-                    spacesAvailable
+                    obj.getInt("capacity")
             );
         } else {
-            throw new JSONException("Bike station object did not have all data");
+            throw new JSONException("Bike station not in use right now");
         }
     }
 
     private static int parseBikesAvailable(JSONObject obj) {
         try {
             return obj.getJSONObject("availableVehicles").getInt("total");
-        } catch (JSONException e) {
-            return 0;
-        }
-    }
-
-    private static int parseSpacesAvailable(JSONObject obj) {
-        try {
-            return obj.getJSONObject("availableSpaces").getInt("total");
         } catch (JSONException e) {
             return 0;
         }
