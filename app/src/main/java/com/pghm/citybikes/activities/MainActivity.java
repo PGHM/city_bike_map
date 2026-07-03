@@ -12,6 +12,9 @@ import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -61,8 +64,16 @@ public class MainActivity extends AppCompatActivity {
 
         mapView = findViewById(R.id.map);
         mapView.onCreate(savedInstanceState);
+
         mapView.getMapAsync(googleMap -> {
             map = googleMap;
+
+            // Add insets to keep to locate me button from goind under system bars
+            WindowInsetsCompat windowInsets = ViewCompat.getRootWindowInsets(mapView);
+            if (windowInsets != null) {
+                Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+                map.setPadding(insets.left, insets.top, insets.right, insets.bottom);
+            }
 
             initializeStationMarkers(stationsById.values());
             map.setMapColorScheme(MapColorScheme.FOLLOW_SYSTEM);
