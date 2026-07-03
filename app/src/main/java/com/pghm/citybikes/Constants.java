@@ -8,7 +8,7 @@ public class Constants {
             "https://api.digitransit.fi/routing/v2/hsl/gtfs/v1?digitransit-subscription-key=9c43c39a28234c15b6e297f8995522cc";
     public static final String LOG_NAME = "CityBikes";
 
-    public static final LatLng DEFAULT_POSITION = new LatLng(60.169787, 24.938606);
+    public static final LatLng DEFAULT_POSITION = new LatLng(60.171846192416076, 24.941378782923966);
     public static final float DEFAULT_ZOOM = 14.0f;
 
     public static final int LOW_BIKE_THRESHOLD = 5;
