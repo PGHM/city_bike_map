@@ -2,12 +2,12 @@ apply plugin: 'com.android.application'
 
 android {
     namespace = "com.pghm.citybikes"
-    compileSdkVersion 36
+    compileSdkVersion 37
 
     defaultConfig {
         applicationId "com.pghm.citybikes"
         minSdkVersion 23
-        targetSdkVersion 36
+        targetSdkVersion 37
         versionCode 4
         versionName "2.0.3"
     }
